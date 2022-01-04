@@ -1,0 +1,40 @@
+body {
+  background: #2d3436;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+#canvas {
+  margin: auto;
+  background: #636e72;
+  /* border-radius: 0.5rem; */
+}
+
+.score,
+.key {
+  color: white;
+}
+
+.score {
+  padding-top: 5rem;
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.key {
+  padding-top: 1rem;
+}
+
+.score h1,
+.key h1 {
+  text-align: center;
+  margin: auto;
+}
+
+.textRed {
+  color: #ff7675;
+}
