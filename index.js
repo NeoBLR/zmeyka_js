@@ -1,3 +1,13 @@
+// setting
+
+let MoveSide = 'UP'
+
+let Speed = 500
+
+let Score = 0
+
+// setting
+
 class Snake {
   constructor(X, Y, SnakeLen) {
     this.X = X
@@ -18,60 +28,67 @@ let Draw = (X, Y) => {
   var canvas = document.getElementById('canvas')
   var ctx = canvas.getContext('2d')
 
-  ctx.clearRect(0, 0, 400, 400) //clear all
   ctx.fillStyle = '#ff7675'
 
   ctx.fillRect(16 * X, 16 * Y, 16, 16)
-
-  //   for (let i = 1; i < 5; i++) {
-  //     ctx.fillRect(16 * i, 16 * i, 16, 16)
-  //   }
 }
 
 let DrawTail = (X, Y) => {
   var canvas = document.getElementById('canvas')
   var ctx = canvas.getContext('2d')
 
-  //   ctx.clearRect(0, 0, 400, 400) //clear all
   ctx.fillStyle = '#ff7675b8'
 
   ctx.fillRect(16 * X, 16 * Y, 16, 16)
-
-  //   for (let i = 1; i < 5; i++) {
-  //     ctx.fillRect(16 * i, 16 * i, 16, 16)
-  //   }
 }
 
-let DrawSnake = (X, Y) => {
+let Clear = () => {
   var canvas = document.getElementById('canvas')
   var ctx = canvas.getContext('2d')
 
-  ctx.clearRect(0, 0, 400, 400)
-
-  ctx.fillStyle = '#ff7675'
-
-  ctx.fillRect(16 * X, 16 * Y, 16, 16)
+  ctx.clearRect(0, 0, 400, 400) //clear all
 }
 
-// setting
+class Apple {
+  constructor(X, Y) {
+    this.X = X
+    this.Y = Y
+  }
+  DrawApple = () => {
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
 
-let MoveSide = 'UP'
+    ctx.fillStyle = '#55efc4'
 
-let Speed = 1000
+    ctx.fillRect(16 * this.X, 16 * this.Y, 16, 16)
+  }
 
-// setting
+  IsScore = () => {
+    Score += 100
+  }
+
+  Colison = (x1, y1) => {
+    if (this.X === x1 && this.Y === y1) {
+      this.IsScore()
+      return true
+    }
+    return false
+  }
+}
 
 let main = () => {
   let PlayerSnake = new Snake(5, 5, 1)
-  let SnakeTail = new Tail()
+  let SnakeTail = [new Tail()]
+
+  let PlayerApple = new Apple(6, 6)
 
   Draw(PlayerSnake.X, PlayerSnake.Y)
 
   //Move fn
 
   let Move = () => {
-    SnakeTail.X = PlayerSnake.X
-    SnakeTail.Y = PlayerSnake.Y
+    SnakeTail[0].X = PlayerSnake.X
+    SnakeTail[0].Y = PlayerSnake.Y
 
     if (MoveSide === 'UP') PlayerSnake.Y += -1
 
@@ -81,8 +98,15 @@ let main = () => {
 
     if (MoveSide === 'LEFT') PlayerSnake.X += 1
 
+    Clear()
+
+    if (PlayerApple.Colison(PlayerSnake.X, PlayerSnake.Y)) {
+      SnakeTail.push(new Tail())
+    }
+
+    PlayerApple.DrawApple()
     Draw(PlayerSnake.X, PlayerSnake.Y)
-    DrawTail(SnakeTail.X, SnakeTail.Y)
+    DrawTail(SnakeTail[0].X, SnakeTail[0].Y)
 
     PrintInfo()
   }
@@ -92,6 +116,8 @@ let main = () => {
   let PrintInfo = () => {
     document.getElementById('x').innerHTML = PlayerSnake.X
     document.getElementById('y').innerHTML = PlayerSnake.Y
+
+    document.getElementById('score').innerHTML = Score
   }
 
   //loop
