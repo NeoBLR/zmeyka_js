@@ -14,11 +14,6 @@ body {
   /* border-radius: 0.5rem; */
 }
 
-.score,
-.key {
-  color: white;
-}
-
 .score {
   padding-top: 5rem;
   padding-bottom: 0.5rem;
@@ -29,10 +24,10 @@ body {
   padding-top: 1rem;
 }
 
-.score h1,
-.key h1 {
+.textCenter h1 {
   text-align: center;
   margin: auto;
+  color: white;
 }
 
 .textRed {
